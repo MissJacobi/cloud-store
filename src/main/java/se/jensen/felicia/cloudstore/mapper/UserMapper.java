@@ -24,6 +24,6 @@ public class UserMapper {
         user.setFirstName(DTO.firstname());
         user.setLastName(DTO.lastname());
         user.setRole(DTO.role());
-        user.setPassword(DTO.role());
+        user.setPassword(DTO.password());
     }
 }

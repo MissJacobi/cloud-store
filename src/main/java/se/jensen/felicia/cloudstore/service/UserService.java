@@ -24,6 +24,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDTO saveUser(UserRequestDTO userDTO){
+        if(userDTO.password() == null || userDTO.password().isBlank()){
+            throw new IllegalArgumentException("Password is missing in request body");
+        }
         User user = userMapper.fromDTO(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -38,13 +41,23 @@ public class UserService {
         Optional<User> existing = userRepository.findById(id);
         if(existing.isPresent()){
             User user = existing.get();
-            user.setEmail(DTO.email());
-            user.setFirstName(DTO.firstname());
-            user.setLastName(DTO.lastname());
-            user.setPassword(passwordEncoder.encode(DTO.password()));
-            user.setRole(DTO.role());
+            if (DTO.email() != null) {
+                user.setEmail(DTO.email());
+            }
+            if (DTO.firstname() != null) {
+                user.setFirstName(DTO.firstname());
+            }
+            if (DTO.lastname() != null) {
+                user.setLastName(DTO.lastname());
+            }
+            if (DTO.password() != null && !DTO.password().isBlank()) {
+                user.setPassword(passwordEncoder.encode(DTO.password()));
+            }
+            if (DTO.role() != null) {
+                user.setRole(DTO.role());
+            }
             User updated = userRepository.save(user);
-            return  userMapper.toDTO(updated);
+            return userMapper.toDTO(updated);
         } else {
             throw new NoSuchElementException("Ingen användare i databasen med id: " + id);
         }

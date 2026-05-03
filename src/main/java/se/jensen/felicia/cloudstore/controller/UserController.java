@@ -16,19 +16,19 @@ import se.jensen.felicia.cloudstore.service.UserService;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/register")
+   /* @GetMapping("/register")
     public String showRegistrationForm(Model model){
         model.addAttribute("user", new User());
         return "register";
-    }
+    }*/
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@ModelAttribute("user")@RequestBody UserRequestDTO DTO){
+    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO DTO){
         UserResponseDTO response = userService.saveUser(DTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{iD}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserByIndex(@PathVariable Long id){
         UserResponseDTO userFromDB = userService.getUserWithID(id);
         return ResponseEntity.ok(userFromDB);

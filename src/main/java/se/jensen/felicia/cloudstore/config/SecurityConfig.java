@@ -32,7 +32,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, MyUserDetailsService myUserDetailsService) throws Exception{
         http
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/users/register", "/users/login").permitAll()
                         .anyRequest().authenticated()
@@ -43,17 +42,6 @@ public class SecurityConfig {
         http.userDetailsService(myUserDetailsService);
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository){
-        return email -> userRepository.findByEmail(email)
-                .map(user -> org.springframework.security.core.userdetails.User
-                        .withUsername(user.getEmail())
-                        .password(user.getPassword())
-                        .roles(user.getRole().replace("ROLE", ""))
-                        .build()
-                ).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 }

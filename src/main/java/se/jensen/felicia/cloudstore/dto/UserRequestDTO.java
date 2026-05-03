@@ -19,7 +19,7 @@ public record UserRequestDTO(
         String role,
 
         @NotBlank
-        @Pattern(regexp = "[A-Za-z0-9]", message = "Only letters and numbers.")
+        @Pattern(regexp = "[A-Za-z0-9]+$", message = "Only letters and numbers.")
         @Size(min = 8, max = 40, message = "Password needs to be between 8 and 40 characters.")
         String password
 ) {
