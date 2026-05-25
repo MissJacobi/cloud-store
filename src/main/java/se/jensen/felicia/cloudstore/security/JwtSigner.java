@@ -1,4 +1,4 @@
-package se.jensen.felicia.cloudstore.config;
+package se.jensen.felicia.cloudstore.security;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,4 +52,6 @@ public class JwtSigner {
                 .compact();
 
     }
+
+
 }
