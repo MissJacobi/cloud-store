@@ -14,6 +14,7 @@ import java.util.List;
 @Getter @Setter @NoArgsConstructor
 @ToString
 public class User {
+    //fix getters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
