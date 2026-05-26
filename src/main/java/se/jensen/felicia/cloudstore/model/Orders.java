@@ -2,7 +2,6 @@ package se.jensen.felicia.cloudstore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,10 @@ public class Orders {
 
     private LocalDateTime orderDate;
     private double totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name =  "status")
+    private OrderStatus status =OrderStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -64,5 +67,13 @@ public class Orders {
 
     public void setItems(List<OrderItem> items) {
         this.items = items;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }
