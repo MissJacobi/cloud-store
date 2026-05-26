@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "users")
 public class User {
