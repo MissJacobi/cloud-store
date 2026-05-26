@@ -1,6 +1,5 @@
 package se.jensen.felicia.cloudstore.security;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +13,7 @@ import java.util.Base64;
 import java.util.Date;
 
 
-@Getter
+
 @Component
 public class JwtSigner {
     private final RSAPrivateKey privateKey;

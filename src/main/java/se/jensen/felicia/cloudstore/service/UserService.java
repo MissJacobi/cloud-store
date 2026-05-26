@@ -1,6 +1,5 @@
 package se.jensen.felicia.cloudstore.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -22,6 +20,10 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private final UserMapper userMapper;
+
+    public UserService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     public UserResponseDTO saveUser(UserRequestDTO userDTO){
         if(userDTO.password() == null || userDTO.password().isBlank()){
