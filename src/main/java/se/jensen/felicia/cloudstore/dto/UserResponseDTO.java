@@ -5,6 +5,8 @@ public record UserResponseDTO(
         String role,
         String firstname,
         String lastname,
-        String email
+        String email,
+        int totalPoints,
+        String membershipTier
 ) {
 }

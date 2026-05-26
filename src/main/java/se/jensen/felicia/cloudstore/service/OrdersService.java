@@ -48,6 +48,13 @@ public class OrdersService {
         }
         orders.setTotalAmount(totalAmount);
 
+        //3.5 Lägger till lojalitetspoäng
+        int pointesErned = (int) totalAmount;
+        int currentPoints = user.getTotalPoints();
+        user.setTotalPoints(currentPoints + pointesErned);
+
+        userRepository.save(user);
+
         //4. Spara modellen i  databasen
         Orders savedOrder = ordersRepository.save(orders);
 

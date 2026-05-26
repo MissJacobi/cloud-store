@@ -24,15 +24,28 @@ public class User {
     @Email
     @Column(unique = true, nullable = false)
     private String email;
+
     @NotBlank
     private String firstName;
+
     @NotBlank
     private String lastName;
+
     private String role;
+
+    @Column(name = "total_points")
+    private int totalPoints = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Orders> orders;
+
+    public String getMembershipTier(){
+        if(this.totalPoints >= 10000){
+            return "Premium Member";
+        }
+        return "Member";
+    }
 
 
     public Long getId() {
@@ -89,5 +102,13 @@ public class User {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
     }
 }
