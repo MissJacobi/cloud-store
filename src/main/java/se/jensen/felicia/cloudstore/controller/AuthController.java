@@ -12,19 +12,20 @@ import se.jensen.felicia.cloudstore.dto.UserResponseDTO;
 import se.jensen.felicia.cloudstore.mapper.UserMapper;
 import se.jensen.felicia.cloudstore.model.User;
 import se.jensen.felicia.cloudstore.repository.UserRepository;
-import se.jensen.felicia.cloudstore.security.JwtSigner;
+//import se.jensen.felicia.cloudstore.security.JwtSigner;
 import se.jensen.felicia.cloudstore.dto.AuthResponseDTO;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final JwtSigner jwtSigner;
+   // private final JwtSigner jwtSigner;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public AuthController(JwtSigner jwtSigner, AuthenticationManager authenticationManager, UserRepository userRepository, UserMapper userMapper) {
-        this.jwtSigner = jwtSigner;
+    //lägg till jwtsigner här
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, UserMapper userMapper) {
+        //this.jwtSigner = jwtSigner;
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
@@ -35,10 +36,10 @@ public class AuthController {
        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDTO.email(), authRequestDTO.password())
         );
-    String token = jwtSigner.generateToken(authRequestDTO.email());
+    //String token = jwtSigner.generateToken(authRequestDTO.email());
     User user = userRepository.findByEmail(authRequestDTO.email())
             .orElseThrow(() -> new RuntimeException("User not found after authentication"));
         UserResponseDTO userResponse = userMapper.toDTO(user);
-    return ResponseEntity.ok(new AuthResponseDTO(token, userResponse));
+    return ResponseEntity.ok(new AuthResponseDTO("hej", userResponse));
     }
 }
