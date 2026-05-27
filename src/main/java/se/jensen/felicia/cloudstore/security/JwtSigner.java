@@ -22,13 +22,20 @@ public class JwtSigner {
 
     public JwtSigner(@Value("${JWT_PRIVATE_KEY}") String privatePem,
                      @Value("${JWT_PUBLIC_KEY}") String publicPem ) throws Exception {
+
+        // Rensar bort alla typer av vanliga PEM-headers och footers, samt alla radbrytningar/blanksteg
         String base64private = privatePem
-                .replace("-----BEGIN PRIVATE KEY-----","")
-                .replace("-----END PRIVATE KEY-----","")
-                .replaceAll("\\s+", "");
-        String base64public  = publicPem
-                .replace("-----BEGIN PUBLIC KEY-----","")
-                .replace("-----END PUBLIC KEY-----","")
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replace("-----BEGIN RSA PRIVATE KEY-----", "")
+                .replace("-----END RSA PRIVATE KEY-----", "")
+                .replaceAll("\\s+", ""); // Tar bort alla radbrytningar och mellanslag
+
+        String base64public = publicPem
+                .replace("-----BEGIN PUBLIC KEY-----", "")
+                .replace("-----END PUBLIC KEY-----", "")
+                .replace("-----BEGIN RSA PUBLIC KEY-----", "")
+                .replace("-----END RSA PUBLIC KEY-----", "")
                 .replaceAll("\\s+", "");
 
         byte[] keyBytesPrivate = Base64.getDecoder().decode(base64private);
