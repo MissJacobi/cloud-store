@@ -9,7 +9,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private Long productId; //id från fakestore API
+    private Long productId; //id from fakestore API
     private String productName;
     private double price;
     private Integer quantity;

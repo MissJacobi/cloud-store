@@ -1,6 +1,5 @@
 package se.jensen.felicia.cloudstore.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.jensen.felicia.cloudstore.dto.UserRequestDTO;
@@ -14,29 +13,27 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponseDTO saveUser(UserRequestDTO userDTO){
         if(userDTO.password() == null || userDTO.password().isBlank()){
             throw new IllegalArgumentException("Password is missing in request body");
         }
-        User user = userMapper.fromDTO(userDTO);
+        User user = UserMapper.fromDTO(userDTO);
+        user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if(userRepository.existsByEmail(user.getEmail())){
             throw new IllegalArgumentException("Email already exists");
         }
         User savedUser = userRepository.save(user);
-        return userMapper.toDTO(savedUser);
+        return UserMapper.toDTO(savedUser);
     }
 
     public UserResponseDTO updateUser(UserRequestDTO DTO, Long id){
@@ -55,18 +52,15 @@ public class UserService {
             if (DTO.password() != null && !DTO.password().isBlank()) {
                 user.setPassword(passwordEncoder.encode(DTO.password()));
             }
-            if (DTO.role() != null) {
-                user.setRole(DTO.role());
-            }
             User updated = userRepository.save(user);
-            return userMapper.toDTO(updated);
+            return UserMapper.toDTO(updated);
         } else {
-            throw new NoSuchElementException("Ingen användare i databasen med id: " + id);
+            throw new NoSuchElementException("No user in the database with id: " + id);
         }
     }
     public void deleteUser(Long id){
         if(!userRepository.existsById(id)){
-            throw new NoSuchElementException("Ingen användare i databasen med id: " + id);
+            throw new NoSuchElementException("No user in the database with id: " + id);
         }
         userRepository.deleteById(id);
     }
@@ -74,6 +68,6 @@ public class UserService {
     public UserResponseDTO getUserWithID(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
-        return userMapper.toDTO(user);
+        return UserMapper.toDTO(user);
     }
 }

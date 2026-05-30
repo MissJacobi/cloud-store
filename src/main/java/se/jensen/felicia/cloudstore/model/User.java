@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -39,7 +39,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Orders> orders;
+    private List<Orders> orders = new ArrayList<>();
 
     public String getMembershipTier(){
         if(this.totalPoints >= 10000){

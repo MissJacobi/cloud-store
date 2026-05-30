@@ -2,7 +2,6 @@ package se.jensen.felicia.cloudstore.service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.jensen.felicia.cloudstore.dto.OrdersDTO;
 import se.jensen.felicia.cloudstore.dto.ProductDTO;
@@ -17,10 +16,13 @@ import java.util.List;
 
 @Service
 public class OrdersService {
-    @Autowired
-    private OrdersRepository ordersRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final OrdersRepository ordersRepository;
+    private final UserRepository userRepository;
+
+    public OrdersService(OrdersRepository ordersRepository, UserRepository userRepository) {
+        this.ordersRepository = ordersRepository;
+        this.userRepository = userRepository;
+    }
 
     @Transactional //Hela orden sparas eller inget alls
     public OrdersDTO createOrder(String email,@NotNull List<ProductDTO> items){

@@ -20,7 +20,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listproducts(Model model){
+    public String listProducts(Model model){
         List<ProductDTO> products = productService.getAllProducts();
         model.addAttribute("products", products);
         return "products";

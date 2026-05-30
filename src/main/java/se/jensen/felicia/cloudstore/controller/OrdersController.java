@@ -1,6 +1,5 @@
 package se.jensen.felicia.cloudstore.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 public class OrdersController {
-    @Autowired
-    private OrdersService ordersService;
+    private final OrdersService ordersService;
+
+    public OrdersController(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @PostMapping
     public ResponseEntity<OrdersDTO> createOrder(@RequestBody List<ProductDTO> items, Authentication authentication){

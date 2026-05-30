@@ -21,7 +21,6 @@ public class ProductService {
     public ProductDTO getProductById(Long id){
     String url = "https://fakestoreapi.com/products" + id;
     RestTemplate restTemplate = new RestTemplate();
-    ProductDTO product = restTemplate.getForObject(url, ProductDTO.class);
-    return product;
+        return restTemplate.getForObject(url, ProductDTO.class);
     }
 }

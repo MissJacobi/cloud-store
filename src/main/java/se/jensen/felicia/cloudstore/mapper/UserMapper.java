@@ -15,7 +15,7 @@ public class UserMapper {
     }
 
     public static UserResponseDTO toDTO(User user){
-        UserResponseDTO DTO = new UserResponseDTO(
+        return new UserResponseDTO(
                 user.getId(),
                 user.getRole(),
                 user.getFirstName(),
@@ -23,14 +23,12 @@ public class UserMapper {
                 user.getEmail(),
                 user.getTotalPoints(),
                 user.getMembershipTier());
-        return DTO;
     }
 
     private static void setUserValues(User user,  UserRequestDTO DTO){
         user.setEmail(DTO.email());
         user.setFirstName(DTO.firstname());
         user.setLastName(DTO.lastname());
-        user.setRole(DTO.role());
         user.setPassword(DTO.password());
     }
 }
