@@ -1,5 +1,6 @@
 package se.jensen.felicia.cloudstore.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO DTO){
+    public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody UserRequestDTO DTO){
         UserResponseDTO response = userService.saveUser(DTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -28,12 +29,7 @@ public class UserController {
         return ResponseEntity.ok(userFromDB);
     }
 
-    @GetMapping("/login")
-    public String showLoginForm(){
-        return "login";
-    }
-
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO DTO){
         UserResponseDTO user = userService.updateUser(DTO, id);
         return ResponseEntity.ok(user);
