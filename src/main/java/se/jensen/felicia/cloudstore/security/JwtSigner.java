@@ -25,10 +25,10 @@ public class JwtSigner {
     private final long expirationSeconds;
 
 
-    public JwtSigner(@Value("${JWT_PRIVATE_KEY}") String privatePem,
-                     @Value("${JWT_PUBLIC_KEY}") String publicPem,
-                     @Value("${JWT_ISSUER:http://localhost:5000}") String issuer,
-                     @Value("${JWT_EXPIRATION_SECONDS:3600}") long expirationSeconds) throws Exception {
+    public JwtSigner(@Value("${jwt.private-key}") String privatePem,
+                     @Value("${jwt.public-key}") String publicPem,
+                     @Value("${jwt.issuer}") String issuer,
+                     @Value("${jwt.expiration-seconds}") long expirationSeconds) throws Exception {
 
 
         String base64private = privatePem

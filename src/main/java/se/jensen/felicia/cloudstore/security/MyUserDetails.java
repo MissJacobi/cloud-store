@@ -8,7 +8,6 @@ import se.jensen.felicia.cloudstore.model.User;
 import java.util.Collection;
 import java.util.List;
 
-
 public class MyUserDetails implements UserDetails {
     private final User user;
 
