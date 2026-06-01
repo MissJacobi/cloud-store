@@ -1,5 +1,6 @@
 package se.jensen.felicia.cloudstore.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,16 +21,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listProducts(Model model){
+    public ResponseEntity<List<ProductDTO>> listProducts(){
         List<ProductDTO> products = productService.getAllProducts();
-        model.addAttribute("products", products);
-        return "products";
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    public String productDetails(@PathVariable Long id, Model model){
+    public ResponseEntity<ProductDTO> productDetails(@PathVariable Long id){
         ProductDTO product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        return "product-details";
+        return ResponseEntity.ok(product);
     }
 }
