@@ -42,18 +42,18 @@ public class OrdersService {
             orderItem.setProductId(item.id());
             orderItem.setProductName(item.title());
             orderItem.setPrice(item.price());
-            orderItem.setQuantity(1);
+            orderItem.setQuantity(item.quantity());
             orderItem.setOrder(orders);
 
             orders.getItems().add(orderItem);
-            totalAmount += item.price();
+            totalAmount += (item.price() * item.quantity());
         }
         orders.setTotalAmount(totalAmount);
 
         //3.5 Lägger till lojalitetspoäng
-        int pointesErned = (int) totalAmount;
+        int pointesEarned = (int) totalAmount;
         int currentPoints = user.getTotalPoints();
-        user.setTotalPoints(currentPoints + pointesErned);
+        user.setTotalPoints(currentPoints + pointesEarned);
 
         userRepository.save(user);
 

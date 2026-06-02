@@ -15,7 +15,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry){
                registry.addMapping("/**")
-                       .allowedOrigins("http://localhost:5174") /* add Netify url later */
+                       .allowedOrigins("https://felicias-cloud-store.netlify.app")
                        .allowedMethods("GET","POST", "PUT","DELETE","OPTIONS")
                        .allowedHeaders("*")
                        .allowCredentials(true);
