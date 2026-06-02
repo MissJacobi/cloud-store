@@ -9,7 +9,7 @@ import se.jensen.felicia.cloudstore.service.OrdersService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/orders")
 public class OrdersController {
     private final OrdersService ordersService;
 
