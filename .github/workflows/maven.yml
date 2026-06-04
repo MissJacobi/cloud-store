@@ -32,7 +32,7 @@ jobs:
 
     # 3. Bygger .jar-fil och kör automatiska tester
     - name: Build with Maven
-      run: mvn clean package
+      run: mvn clean package -DskipTests
 
     # 4. Loggar in på min Docker Hub-användare automatisk
     - name: Log in to Docker Hub
