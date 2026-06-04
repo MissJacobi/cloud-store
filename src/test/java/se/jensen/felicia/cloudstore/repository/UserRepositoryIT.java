@@ -16,6 +16,9 @@ public class UserRepositoryIT {
     @Autowired
     private UserRepository userRepository;
 
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    private se.jensen.felicia.cloudstore.security.JwtSigner jwtSigner;
+
     @Test
     void testSaveAndFindUser(){
         //Arrange
