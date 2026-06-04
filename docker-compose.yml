@@ -11,3 +11,22 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: .
+    container_name: cloudstore-backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/cloudstore?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      JWT_PRIVATE_KEY: "JWT_PRIVATE_KEY"
+      JWT_PUBLIC_KEY: "JWT_PUBLIC_KEY"
+      JWT_ISSUER: "http://localhost:5000"
+volumes:
+  mysql_data:
