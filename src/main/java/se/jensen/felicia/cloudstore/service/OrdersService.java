@@ -86,4 +86,15 @@ public class OrdersService {
                 ))
                 .toList();
     }
+
+    public OrdersDTO getOrderById(Long id) {
+        return ordersRepository.findById(id)
+                .map(orders -> new OrdersDTO(
+                        orders.getId(),
+                        orders.getOrderDate(),
+                        orders.getTotalAmount(),
+                        null
+                ))
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+    }
 }
