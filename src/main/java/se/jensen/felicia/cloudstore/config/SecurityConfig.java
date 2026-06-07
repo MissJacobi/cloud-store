@@ -42,9 +42,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, MyUserDetailsService myUserDetailsService) throws Exception{ // 🚨 HÄR TOG VI BORT CORS UR PARENTESEN!
+    public SecurityFilterChain filterChain(HttpSecurity http, MyUserDetailsService myUserDetailsService) throws Exception{
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 🚨 HÄR ANROPAS DEN DIREKT (Perfekt!)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
